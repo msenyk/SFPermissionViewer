@@ -2,7 +2,7 @@
   "name": "sf-perm-viewer",
   "version": "1.0.0",
   "description": "Profile and Permission Set viewer",
-  "main": "index.jsx",
+  "main": "/js/app.jsx",
   "scripts": {
     "start": "webpack-dev-server --inline --content-base .",
     "test": "echo \"Error: no test specified\" && exit 1"
