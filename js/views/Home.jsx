@@ -1,10 +1,16 @@
 import React from 'react'
-import {PageHeader} from 'react-bootstrap'
+import Navbar from '../modules/Navbar.jsx'
+
 
 export default React.createClass({
   render() {
-    return (<div>
-    <PageHeader>Home page</PageHeader>
-    </div>);
+    return (
+<div>
+	<Navbar />
+	<div className="container">
+		<h3>Home Page</h3>
+	</div>
+</div>
+);
   }
 })
