@@ -6,16 +6,20 @@ export default React.createClass({
   render() {
     return (
     <Navbar inverse>
+    <style type="text/css">{`
+      .navbar {
+          margin-bottom: 0;
+      }
+    `}</style>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">Permission Analyzer</a>
+          <a href="#/">Permission Analyzer</a>
         </Navbar.Brand>
       <Navbar.Toggle />
       </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
             <li><Link to="/">Home Page</Link></li>
-            <li><Link to="/search">Search Permission</Link></li>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

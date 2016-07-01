@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../modules/Navbar.jsx'
+import Navbar from '../components/Navbar.jsx'
 import {Table} from 'react-bootstrap'
 
 //Dummy data will be removed later
@@ -32,8 +32,14 @@ return (
 	value={this.props.product.name}
 	word={this.props.filterText}
 	/>
-	<td>{this.props.product.type}</td>
-	<td>{this.props.product.option}</td>
+	<Highlight
+	value={this.props.product.type}
+	word={this.props.filterText}
+	/>
+	<Highlight
+	value={this.props.product.option}
+	word={this.props.filterText}
+	/>
 </tr>
 	);
 }
@@ -43,7 +49,7 @@ var TableOfPermissions = React.createClass({
   render: function() {
 	var rows = [];
 	this.props.products.forEach(function(product) {
-		if (product.name.indexOf(this.props.filterText) === -1 ) {
+		if (product.name.indexOf(this.props.filterText) === -1 && product.type.indexOf(this.props.filterText) === -1 && product.option.indexOf(this.props.filterText) === -1) {
 			return;
 		}
 		rows.push(<PermissionsRow product={product} key={product.name} filterText={this.props.filterText} />);
