@@ -1,13 +1,11 @@
 import React from 'react'
+import Navbar from '../components/Navbar.jsx'
+import SelectPermissionSet from '../components/SelectPermissionSet.jsx'
 
 export default React.createClass({
   render() {
     return (
-    	<div>
-	    	<h1>View Permissions</h1>
-	    	<h2>Choose profile or permission set:</h2>
-	    	<p>TODO</p>
-    	</div>
-	)
+        <div> <SelectPermissionSet /> </div>
+    )
   }
 })
