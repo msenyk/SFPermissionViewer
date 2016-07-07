@@ -1,12 +1,11 @@
 import React from 'react'
-import Navbar from '../components/Navbar.jsx'
 import {Table} from 'react-bootstrap'
 
 //Dummy data will be removed later
 var PRODUCTS = [
-  {name: 'Finance', type: 'Permission Set', option: ''},
-  {name: 'Standard User', type: 'Profile', option: 'Standard'},
-  {name: 'System Administrator', type: ' Profile', option: 'Standard'}
+  {name: 'Finance', type: 'Permission Set', option: '', id: "00p000123000001DxC"},
+  {name: 'Standard User', type: 'Profile', option: 'Standard', id: "00p000123000002DxC"},
+  {name: 'System Administrator', type: ' Profile', option: 'Standard', id: "00p000123000003DxC"}
 ];
 
 
@@ -105,9 +104,6 @@ export default React.createClass({
 	},
 	render() {
 	return (<div>
-	<Navbar />
-	<div className="container">
-		<h3>The following profiles / permission sets give access:</h3>
 		<Search
 		filterText={this.state.filterText}
 		onUserInput={this.handleUserInput}
@@ -116,7 +112,6 @@ export default React.createClass({
 		products={PRODUCTS}
 		filterText={this.state.filterText}
 		 />
-	</div>
 </div>
 );
   }
