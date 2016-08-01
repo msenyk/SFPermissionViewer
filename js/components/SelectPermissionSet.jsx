@@ -14,11 +14,15 @@ var Highlight = React.createClass({
 render: function() {
 	var word = this.props.word;
 	var value = this.props.value;
+	function replacer(sub) {
+		return "<strong style='background: rgba(43, 53, 183, 0.85); color: #fff;' className\"match\">"+ sub +"</strong>"
+	}
 	return (
 		<td><span
-		dangerouslySetInnerHTML={{
-			__html : value.replace(word, "<strong style='background: rgba(43, 53, 183, 0.85); color: #fff;' className\"match\">" + word + "</strong>")
-		}} /></td>
+			dangerouslySetInnerHTML={{
+				__html : value.replace(new RegExp(word, 'ig'), replacer)
+			}} 
+		/></td>
 	);
 }
 });
@@ -48,8 +52,12 @@ var TableOfPermissions = React.createClass({
   render: function() {
 	var rows = [];
 	this.props.products.forEach(function(product) {
+		// check difference between value from search and words from table
 		if (product.name.indexOf(this.props.filterText) === -1 && product.type.indexOf(this.props.filterText) === -1 && product.option.indexOf(this.props.filterText) === -1) {
-			return;
+			//check difference between value from search and words from table ignoring case sensitive
+			if (product.name.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 && product.type.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 && product.option.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1) {
+				return;
+			}
 		}
 		rows.push(<PermissionsRow product={product} key={product.name} filterText={this.props.filterText} />);
 	}.bind(this));
