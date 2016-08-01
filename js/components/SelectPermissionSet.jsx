@@ -9,7 +9,7 @@ let PRODUCTS = [
 ];
 
 
-var Highlight = React.createClass({
+class Highlight extends React.Component {
 	render() {
 		const word = this.props.word;
 		const value = this.props.value;
@@ -25,9 +25,9 @@ var Highlight = React.createClass({
 			/>
 		);
 	}
-});
+}
 
-var PermissionsRow = React.createClass({
+class PermissionsRow extends React.Component {
 	render() {
 		return (
 			<tr>
@@ -41,9 +41,9 @@ var PermissionsRow = React.createClass({
 			</tr>
 		);
 	}
-});
+}
 
-var TableOfPermissions = React.createClass({
+class TableOfPermissions extends React.Component {
 	render() {
 		const rows = [];
 		const searchKey = this.props.filterText.toLowerCase();
@@ -68,42 +68,52 @@ var TableOfPermissions = React.createClass({
 			</Table>
 		);
 	}
-})
+}
 
-var Search = React.createClass({
+class Search extends React.Component {
+	constructor() {
+		super();
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleChange() {
 		this.props.onUserInput(
 			this.refs.filterTextInput.value
 		);
-	},
+	}
+
 	render() {
 		return (
-	<form className="form-group pull-right">
-		<input
-		type="text"
-		placeholder="Search..."
-		value={this.props.filterText}
-		className="form-control"
-		ref="filterTextInput"
-		onChange={this.handleChange}
-		/>
-		{' '}
-	</form>
-			);
+			<form className="form-group pull-right">
+				<input
+				type="text"
+				placeholder="Search..."
+				value={this.props.filterText}
+				className="form-control"
+				ref="filterTextInput"
+				onChange={this.handleChange}
+				/>
+				{' '}
+			</form>
+		);
 	}
-})
+}
 
-export default React.createClass({
-	getInitialState() {
-		return {
+export default class SelectPermissionSet extends React.Component {
+	constructor() {
+		super();
+		this.handleUserInput = this.handleUserInput.bind(this);
+		this.state = {
 			filterText: ''
 		};
-	},
+	}
+
 	handleUserInput(filterText) {
 		this.setState({
 			filterText: filterText
 		});
-	},
+	}
+
 	render() {
 		return (
 			<div>
@@ -118,4 +128,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-})
+}
