@@ -2,87 +2,81 @@ import React from 'react'
 import {Table} from 'react-bootstrap'
 
 //Dummy data will be removed later
-var PRODUCTS = [
-  {name: 'Finance', type: 'Permission Set', option: '', id: "00p000123000001DxC"},
-  {name: 'Standard User', type: 'Profile', option: 'Standard', id: "00p000123000002DxC"},
-  {name: 'System Administrator', type: ' Profile', option: 'Standard', id: "00p000123000003DxC"}
+let PRODUCTS = [
+	{name: 'Finance', type: 'Permission Set', option: '', id: "00p000123000001DxC"},
+	{name: 'Standard User', type: 'Profile', option: 'Standard', id: "00p000123000002DxC"},
+	{name: 'System Administrator', type: ' Profile', option: 'Standard', id: "00p000123000003DxC"}
 ];
 
 
-
 var Highlight = React.createClass({
-render: function() {
-	var word = this.props.word;
-	var value = this.props.value;
-	function replacer(sub) {
-		return "<strong style='background: rgba(43, 53, 183, 0.85); color: #fff;' className\"match\">"+ sub +"</strong>"
+	render() {
+		const word = this.props.word;
+		const value = this.props.value;
+		function replacer(sub) {
+			return "<strong style='background: rgba(43, 53, 183, 0.85); color: #fff;' className\"match\">"+
+				sub +"</strong>"
+		}
+		return (
+			<span
+				dangerouslySetInnerHTML={{
+					__html : value.replace(new RegExp(word, 'ig'), replacer)
+				}}
+			/>
+		);
 	}
-	return (
-		<td><span
-			dangerouslySetInnerHTML={{
-				__html : value.replace(new RegExp(word, 'ig'), replacer)
-			}} 
-		/></td>
-	);
-}
 });
 
 var PermissionsRow = React.createClass({
-render: function() {
-return (
-<tr>
-	<Highlight
-	value={this.props.product.name}
-	word={this.props.filterText}
-	/>
-	<Highlight
-	value={this.props.product.type}
-	word={this.props.filterText}
-	/>
-	<Highlight
-	value={this.props.product.option}
-	word={this.props.filterText}
-	/>
-</tr>
-	);
-}
+	render() {
+		return (
+			<tr>
+				<td>
+					<Highlight value={this.props.product.name} word={this.props.filterText} />
+				</td><td>
+					<Highlight value={this.props.product.type} word={this.props.filterText} />
+				</td><td>
+					<Highlight value={this.props.product.option} word={this.props.filterText} />
+				</td>
+			</tr>
+		);
+	}
 });
 
 var TableOfPermissions = React.createClass({
-  render: function() {
-	var rows = [];
-	this.props.products.forEach(function(product) {
-		// check difference between value from search and words from table
-		if (product.name.indexOf(this.props.filterText) === -1 && product.type.indexOf(this.props.filterText) === -1 && product.option.indexOf(this.props.filterText) === -1) {
-			//check difference between value from search and words from table ignoring case sensitive
-			if (product.name.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 && product.type.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 && product.option.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1) {
-				return;
-			}
+	render() {
+		const rows = [];
+		const searchKey = this.props.filterText.toLowerCase();
+		function matchFound(field) {
+			return field && field.toLowerCase().indexOf(searchKey) !== -1;
 		}
-		rows.push(<PermissionsRow product={product} key={product.name} filterText={this.props.filterText} />);
-	}.bind(this));
-    return (
-  <Table striped bordered condensed hover>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Option</th>
-      </tr>
-    </thead>
-    <tbody>{rows}</tbody>
-  </Table>
-);
-  }
+		this.props.products.forEach(function(product) {
+			if ( matchFound(product.name) || matchFound(product.type) || matchFound(product.option) ) {
+				rows.push(<PermissionsRow product={product} key={product.id} filterText={this.props.filterText} />);
+			}
+		}.bind(this));
+		return (
+			<Table striped bordered condensed hover>
+				<thead>
+				  <tr>
+				    <th>Name</th>
+				    <th>Type</th>
+				    <th>Option</th>
+				  </tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</Table>
+		);
+	}
 })
 
 var Search = React.createClass({
-	handleChange: function() {
+	handleChange() {
 		this.props.onUserInput(
 			this.refs.filterTextInput.value
 		);
 	},
-	render: function() {
+	render() {
 		return (
 	<form className="form-group pull-right">
 		<input
@@ -100,27 +94,28 @@ var Search = React.createClass({
 })
 
 export default React.createClass({
-	getInitialState: function() {
+	getInitialState() {
 		return {
 			filterText: ''
 		};
 	},
-	handleUserInput: function(filterText) {
+	handleUserInput(filterText) {
 		this.setState({
 			filterText: filterText
 		});
 	},
 	render() {
-	return (<div>
-		<Search
-		filterText={this.state.filterText}
-		onUserInput={this.handleUserInput}
-		/>
-		<TableOfPermissions
-		products={PRODUCTS}
-		filterText={this.state.filterText}
-		 />
-</div>
-);
-  }
+		return (
+			<div>
+				<Search
+				filterText={this.state.filterText}
+				onUserInput={this.handleUserInput}
+				/>
+				<TableOfPermissions
+				products={PRODUCTS}
+				filterText={this.state.filterText}
+				 />
+			</div>
+		);
+	}
 })
