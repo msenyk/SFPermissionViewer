@@ -71,12 +71,9 @@ class TableOfPermissions extends React.Component {
 }
 
 class Search extends React.Component {
-	constructor() {
-		super();
-		this.handleChange = this.handleChange.bind(this);
-	}
 
-	handleChange() {
+	// bind to this with arrow function
+	handleChange = (e) => {
 		this.props.onUserInput(
 			this.refs.filterTextInput.value
 		);
@@ -102,10 +99,13 @@ class Search extends React.Component {
 export default class SelectPermissionSet extends React.Component {
 	constructor() {
 		super();
-		this.handleUserInput = this.handleUserInput.bind(this);
+		
 		this.state = {
 			filterText: ''
 		};
+
+		// bind to this
+		this.handleUserInput = this.handleUserInput.bind(this);
 	}
 
 	handleUserInput(filterText) {
