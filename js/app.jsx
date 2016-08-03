@@ -8,5 +8,6 @@ render((
   <Router history={hashHistory}>
     <Route path="/" component={Home}/>
     <Route path="/view" component={View}/>
+    <Route path="/view/:permSetId" component={View}/>
   </Router>
 ), document.getElementById('app'))
